@@ -460,9 +460,11 @@ $(window).resize(function() {
         if (target == document.querySelector('.credit__inner')) {
             closeModal()
         }
+        if (target == document.querySelector('#openVidjet')) {
+            document.body.classList.add('overley')
+            $('body').addClass('overley')
+            openModal()
+        }
     })
-    widgetBtn.on('click', function() {
-        $('body').addClass('overley')
-        openModal()
-    })
+
 })();
