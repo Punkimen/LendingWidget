@@ -411,22 +411,23 @@ $(window).resize(function() {
 (function() {
     let widgetBtn = $("#openVidjet")
     let creditPopup = document.querySelector('.credit')
-        // const btnNext = document.querySelector('.credit__vidget-next')
     let btnPrev = $('.btn-prev')
     let btnNext = $('.btn-next')
     let count = 0
     let creditWidget = document.querySelectorAll('.credit__vidget')
 
-    const closeModal = (e) => {
-        creditPopup.classList.remove('show')
-    };
-    const openModal = (e) => {
-        creditPopup.classList.add('show')
-    };
+    // const closeModal = function(e) {
+    //     creditPopup.classList.remove('show')
+    //     document.body.classList.remove('overley')
+    // };
+    // const openModal = function(e) {
+    //     creditPopup.classList.add('show')
+    //     document.body.classList.add('overley')
+    // };
 
-    const nextStep = (e) => {
+    const nextStep = function(e) {
         count++
-        creditWidget.forEach((el, i) => {
+        creditWidget.forEach(function(el, i) {
             if (i === count) {
                 el.classList.add('visible')
             } else {
@@ -434,9 +435,9 @@ $(window).resize(function() {
             }
         })
     }
-    const prevStep = (e) => {
+    const prevStep = function(e) {
         count--
-        creditWidget.forEach((el, i) => {
+        creditWidget.forEach(function(el, i) {
             if (i === count) {
                 el.classList.add('visible')
             } else {
@@ -450,21 +451,63 @@ $(window).resize(function() {
     btnPrev.on('click', function() {
         prevStep()
     })
-    const target = (e) => {
-        if (e.target == document.querySelector('.credit__inner')) {
-            closeModal()
-        }
-    };
-    document.addEventListener('click', e => {
-        let target = e.target
-        if (target == document.querySelector('.credit__inner')) {
-            closeModal()
-        }
-        if (target == document.querySelector('#openVidjet')) {
-            document.body.classList.add('overley')
-            $('body').addClass('overley')
-            openModal()
-        }
-    })
 
+    // document.addEventListener('click', function(e) {
+    //     let target = e.target
+    //     if (target == document.querySelector('.credit__inner')) {
+    //         closeModal()
+    //     }
+    //     if (target == document.querySelector('#openVidjet')) {
+    //         openModal()
+    //     }
+    // })
+    // widgetBtn.on('click', function() {
+    //     openModal()
+    // })
+
+    $(function() {
+        $('.popup-modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            focus: '#username',
+            modal: true
+        });
+
+        document.addEventListener('click', function(e) {
+            let target = e.target
+            if (target == document.querySelector('.credit__inner')) {
+                e.preventDefault();
+                $.magnificPopup.close();
+            }
+        })
+
+        // $(document).on('click', '.credit__inner', function(e) {
+        //     e.preventDefault();
+        //     $.magnificPopup.close();
+        // });
+    });
+})();
+
+(function() {
+    $('.answer-accordion__title').on('click', function() {
+        $(this).toggleClass('active')
+        $(this).next().slideToggle()
+    })
+})();
+
+(function() {
+    const scrollLink = document.querySelectorAll('a.scroll-link');
+    const smoothScrol = (elememt) => {
+        elememt.forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault()
+                const id = e.currentTarget.getAttribute('href');
+                document.querySelector(id).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                })
+            })
+        })
+    };
+    smoothScrol(scrollLink);
 })();
